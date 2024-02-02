@@ -8,6 +8,9 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  var pergunta = 0;
+  List<Widget> iconsScore = [];
+  List<String> questionsList = ["QUestao 1", "QUestao2"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,10 +26,10 @@ class _QuizScreenState extends State<QuizScreen> {
                   child: Container(
                     height: 100,
                     width: 400,
-                    child: const Center(
-                      child: Text("Quem foi o primeiro homem a pisar na Lua?",
+                    child: Center(
+                      child: Text(questionsList[pergunta],
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 30,
                           )),
@@ -38,7 +41,24 @@ class _QuizScreenState extends State<QuizScreen> {
                   width: 500,
                   color: Colors.black,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (iconsScore.length < 12) {
+                        for (var i = 0; i < questionsList.length; i++) {
+                          pergunta++;
+                          if (pergunta >= questionsList.length) {
+                            // Se você quiser reiniciar as perguntas após atingir a última
+                            pergunta = 0;
+                          }
+                        }
+                        setState(() {
+                          iconsScore.add(const Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          ));
+                          _nextQuestion() ;
+                        });
+                      }
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.green,
                     ),
@@ -56,7 +76,19 @@ class _QuizScreenState extends State<QuizScreen> {
                   width: 500,
                   color: Colors.black,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (iconsScore.length < 12 ) {
+
+
+                        setState(() {
+                          iconsScore.add(const Icon(
+                            Icons.close,
+                            color: Colors.red,
+                          ));
+                          _nextQuestion() ;
+                        });
+                      }
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),
@@ -68,97 +100,16 @@ class _QuizScreenState extends State<QuizScreen> {
                     ),
                   ),
                 ),
-                const Row(children: <Widget>[
-                  Icon(
-                    Icons.close,
-                    color: Colors.red,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.check,
-                    color: Colors.green,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.close,
-                    color: Colors.red,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.check,
-                    color: Colors.green,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.close,
-                    color: Colors.red,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.check,
-                    color: Colors.green,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.close,
-                    color: Colors.red,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.check,
-                    color: Colors.green,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.close,
-                    color: Colors.red,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.check,
-                    color: Colors.green,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.close,
-                    color: Colors.red,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.check,
-                    color: Colors.green,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                                    Icon(
-                    Icons.close,
-                    color: Colors.red,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                  Icon(
-                    Icons.check,
-                    color: Colors.green,
-                    size: 22.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  )
-
-     
-                ])
+                Row(children: iconsScore)
               ]),
         ),
       ),
     );
+  }
+
+  void _nextQuestion() {
+    if (pergunta < questionsList.length - 1) {
+      pergunta++;
+    } 
   }
 }
